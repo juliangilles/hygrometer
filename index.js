@@ -1,14 +1,21 @@
-const imu = require("nodeimu").IMU;
 const matrix = require('sense-hat-led').sync;
+const spawn = require("child_process").spawn;
+
 matrix.lowLight = true;
 matrix.setRotation(180);
-matrix.showMessage(`... booting ...`, 0.2);
+matrix.showMessage(`... START ...`, 0.25);
 matrix.clear();
-const IMU = new imu();
+displayValue();
+
+function displayValue() {
+    const process = spawn('python',["./test.py"] );
+    process.stdout.on('data', function(data) {
+        const humidity = Number(data.toString()).toFixed(2);
+        matrix.showMessage(`${humidity}%`, 0.25);
+        matrix.clear();
+    } )
+};
+
 setInterval(() => {
-    const data = IMU.getValueSync();
-    console.log(data.humidity);
-    const humidity = Number(Number(data.humidity).toString().replace('e-', '')).toFixed(2);
-    matrix.showMessage(`${humidity}%`, 0.2);
-    matrix.clear();
-}, 8000);
+    displayValue();
+}, 10000);
