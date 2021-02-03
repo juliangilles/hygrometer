@@ -1,0 +1,16 @@
+{
+  "name": "hygrometer",
+  "version": "1.0.0",
+  "description": "hygrometer for a raspberry pi",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Julian Gilles",
+  "license": "ISC",
+  "dependencies": {
+    "nodeimu": "^2.1.12",
+    "sense-hat-led": "^1.2.0",
+    "sense-joystick": "0.0.3"
+  }
+}
