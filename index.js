@@ -1,14 +1,14 @@
-/* const imu = require("nodeimu").IMU;
+const imu = require("nodeimu").IMU;
+const matrix = require('sense-hat-led').sync;
+matrix.lowLight = true;
+matrix.setRotation(180);
+matrix.showMessage(`... booting ...`, 0.2);
+matrix.clear();
 const IMU = new imu();
-
-IMU.getValue((err, data) => {
-    if (err !== null) {
-        console.error("Could not read sensor data: ", err);
-        return;
-    }
-});
-*/
-
-const matrix = require('sense-hat-led');
-matrix.showMessage('test');
-matrix.flashMessage();
+setInterval(() => {
+    const data = IMU.getValueSync();
+    console.log(data.humidity);
+    const humidity = Number(Number(data.humidity).toString().replace('e-', '')).toFixed(2);
+    matrix.showMessage(`${humidity}%`, 0.2);
+    matrix.clear();
+}, 8000);
